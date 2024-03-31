@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block start%}
+
+    <div class="container">
+
+        <form class="mx-auto col-6 card p-3 mt-5 shadow-lg" method = "POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>Login</h1>
+            <hr>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">User Name</label>
+              <input type="email" name="username" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" required id="exampleInputPassword1">
+            </div>
+            <p>Dont have an Account? <a href="/register/"> Create here</a></p>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+    </div>
+
+    
+{% endblock %}

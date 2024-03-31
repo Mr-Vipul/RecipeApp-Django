@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
+from django.contrib.auth.models import User
+from django.contrib import messages
 
-
+    
 # Create your views here.
 def home(request):
     if request.method == "POST":
@@ -32,6 +34,43 @@ def home(request):
     context = {"recipe" : queryset}
 
     return render(request, "recipe.html", context)
+
+
+def login(request):
+    return render(request, "login.html")
+
+def register(request):
+    if request.method == 'POST':
+        data = request.POST
+        first_name = data.get("first_name")
+        last_name = data.get("last_name")
+        username = data.get("username")
+        password = data.get("password")
+        
+        user = User.objects.filter(username = username)
+        if user.exists():
+            messages.info(request, "Username Already Taken")
+            return redirect("/register/")
+
+        user  = User.objects.create(
+                first_name = first_name ,
+                last_name = last_name,
+                username = username
+                 )
+
+        # Encrypted password setter by default  Django
+        user.set_password(password)
+        user.save()
+        
+        messages.info(request, "Successfully Created Account")
+        return redirect("/register/")
+    return render(request, "register.html")
+
+
+
+
+
+
 
 
 # Deleting the recipe here
