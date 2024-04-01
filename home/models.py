@@ -15,3 +15,4 @@ class Recipe(models.Model):
     recipe_name = models.CharField(max_length=200)
     recipe_description = models.TextField(max_length=200)
     recipe_image = models.ImageField(upload_to='recipe_images')
+    recipe_view_count = models.IntegerField(default = 1)

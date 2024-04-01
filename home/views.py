@@ -47,6 +47,7 @@ def register(request):
         username = data.get("username")
         password = data.get("password")
         
+        # checking if the username already exists or not
         user = User.objects.filter(username = username)
         if user.exists():
             messages.info(request, "Username Already Taken")
