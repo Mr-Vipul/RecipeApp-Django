@@ -25,5 +25,8 @@ urlpatterns = [
     path("login/", login, name="login"),
     path("register/", register, name="register"),
     path("delete_recipe/<id>/", delete_recipe, name="delete_recipe"),
-    path("update_recipe/<id>/", update_recipe, name="update_recipe")
+    path("update_recipe/<id>/", update_recipe, name="update_recipe"),
+    path("student/", get_student, name="get_student"),
+    path("student-marks/<student_name>/", student_marks, name="student_marks"),
+    # path("url_name that we want", function_name, name="function_name")
 ]

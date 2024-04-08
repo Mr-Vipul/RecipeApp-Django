@@ -1,0 +1,109 @@
+{% extends "layout.html" %} {% block start%}
+
+<div class="container">
+
+    {% comment %}
+    <form class="mx-auto col-6 card p-3 mt-5 shadow-lg" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1>Login</h1>
+        <hr>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">User Name</label>
+            <input type="email" name="username" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" required id="exampleInputPassword1">
+        </div>
+        <p>Dont have an Account? <a href="/register/"> Create here</a></p>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form> {% endcomment %}
+
+
+
+    <div class="container">
+
+        <div class="container text-center p-4" style="font-family:monospace;font-weight:bold">
+            <h1>Student List</h1>
+        </div>
+
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <form class="">
+                        <div class="mb-3">
+                            <input type="text" name="search" placeholder="Search" class="form-control">
+                        </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+                </form>
+            </div>
+        </div>
+
+
+        <table class="table table-striped table-hover">
+
+            <thead>
+                <tr>
+                    <th scope="col ">S.No</th>
+                    <th scope="col ">Student ID</th>
+                    <th scope="col ">Student Name</th>
+                    <th scope="col ">Department</th>
+                    <th scope="col ">Student Email</th>
+                    <th scope="col ">Student Age</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for students in student%}
+                <tr>
+                    <td>{{ forloop.counter0 | add:student.start_index }}</td>
+                    <td>{{students.student_id}}</td>
+                    <td><a href="{% url 'student_marks' students.student_name %}">{{students.student_name}}</a></td>
+                    <td>{{students.department}}</td>
+                    <td>{{students.student_email}}</td>
+                    <td>{{students.student_age}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="container d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+                {% if student.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ student.previous_page_number }}">Previous</a></li>
+                {% else %}
+
+                <li class="page-item disabled"><span class="page-link">&laquo; First</span></li>
+                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                {% endif %}
+
+                <li class="page-item active" aria-current="page"><span class="page-link">{{ student.number }}</span></li>
+
+                {% if student.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ student.next_page_number }}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ student.paginator.num_pages }}">Last &raquo;</a></li>
+                {% else %}
+
+                <li class="page-item disabled"><span class="page-link">Next</span></li>
+                <li class="page-item disabled"><span class="page-link">Last &raquo;</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+</div>
+
+
+{% endblock %}

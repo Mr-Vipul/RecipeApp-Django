@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.db.models import Q, Sum
+from django.core.paginator import Paginator
 
     
 # Create your views here.
@@ -69,11 +71,6 @@ def register(request):
 
 
 
-
-
-
-
-
 # Deleting the recipe here
 def delete_recipe(request, id):
     queryset = Recipe.objects.get(id = id)
@@ -105,3 +102,46 @@ def update_recipe(request, id):
     context = {"recipe": queryset}
     
     return render(request, "update.html", context)
+
+def get_student(request):
+    
+    queryset = Student.objects.all()
+    
+    
+    # using Q to search from multiple attributes
+    if request.GET.get("search"):
+        search = request.GET.get("search")
+        queryset = queryset.filter(
+            Q(student_name__icontains = search) | Q(department__department__icontains = search) |
+            Q(student_id__student_id__icontains = search) 
+        )
+        
+    paginator = Paginator(queryset, 25)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    queryset = paginator.get_page(page_number)
+        
+    
+    return render(request,"report/student.html", {"student": queryset} )
+
+
+# from home.seed import generate_report_card
+
+def student_marks(request, student_name):
+    # generate_report_card()
+    
+    queryset = SubjectMarks.objects.filter(student__student_name = student_name)
+    total_marks = queryset.aggregate(total_marks = Sum('marks'))
+    ranks = Student.objects.annotate(marks = Sum('studentmarks__marks')).order_by('-marks','-student_age')
+    # current_rank = -1 
+    # i = 1
+    
+    # for rank in ranks:
+    #     if rank.student_name == student_name:
+    #         current_rank = i  
+    #         print(current_rank)
+    #         break
+    #     i=i+1
+    return render(request, "report/student_marks.html",{'queryset': queryset, 
+                                                        'total_marks':total_marks, 
+                                                        'current_rank': current_rank})
+    
