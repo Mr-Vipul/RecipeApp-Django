@@ -2,25 +2,6 @@
 
 <div class="container">
 
-    {% comment %}
-    <form class="mx-auto col-6 card p-3 mt-5 shadow-lg" enctype="multipart/form-data">
-        {% csrf_token %}
-        <h1>Login</h1>
-        <hr>
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">User Name</label>
-            <input type="email" name="username" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" required id="exampleInputPassword1">
-        </div>
-        <p>Dont have an Account? <a href="/register/"> Create here</a></p>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form> {% endcomment %}
-
-
-
     <div class="container">
 
         <div class="container text-center p-4" style="font-family:monospace;font-weight:bold">
@@ -30,15 +11,20 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <form class="">
                         <div class="mb-3">
                             <input type="text" name="search" placeholder="Search" class="form-control">
                         </div>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+
+                <div class="col-lg-4" style="display: flex;">
+                    <h4>Send Mail</h4>
+                    <a href="{% url 'send_email' %}" class="btn btn-primary p-1 mb-4 ">Send Mail</a>
                 </div>
                 </form>
             </div>

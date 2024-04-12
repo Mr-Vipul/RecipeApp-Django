@@ -28,5 +28,7 @@ urlpatterns = [
     path("update_recipe/<id>/", update_recipe, name="update_recipe"),
     path("student/", get_student, name="get_student"),
     path("student-marks/<student_name>/", student_marks, name="student_marks"),
+    path("send_email/", send_email, name="send_email"),
+    
     # path("url_name that we want", function_name, name="function_name")
 ]
